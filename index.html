@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deadline Radar: the honest planner for college students</title>
+<meta name="description" content="Deadline Radar pulls in your Canvas assignments, tells you when to start each one and why, and warns you when you have more work than time.">
+<meta property="og:title" content="Deadline Radar: the honest planner">
+<meta property="og:description" content="When to start every assignment, and why. Warnings when your work doesn't fit. Alerts when a due date moves.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%233451d1'/%3E%3Ccircle cx='12' cy='12' r='6' fill='none' stroke='white' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='2' fill='white'/%3E%3C/svg%3E">
+<style>
+/* Same tokens as the app (docs/design-system.md). No new colours below this block. */
+:root {
+  --bg: #f6f7f9; --surface: #ffffff; --surface-2: #f0f2f5; --border: #e2e5ea;
+  --text: #15181e; --text-muted: #5a6170;
+  --primary: #3451d1; --primary-hover: #2a43b3; --primary-soft: #eef1fd; --on-primary: #ffffff;
+  --ok: #1b6b3a; --ok-soft: #e9f7ef; --soon: #8a5300; --soon-soft: #fff6e5; --risk: #b42318; --risk-soft: #fdf0ef;
+  --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --radius: 10px; --radius-lg: 14px;
+  --shadow: 0 1px 2px rgb(16 24 40 / 0.05), 0 8px 24px rgb(16 24 40 / 0.08);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1015; --surface: #161920; --surface-2: #1d2129; --border: #2a2f39;
+    --text: #eceef2; --text-muted: #a2a8b4;
+    --primary: #8da2ff; --primary-hover: #a9b8ff; --primary-soft: #1d2340; --on-primary: #0e1015;
+    --ok: #6fd79a; --ok-soft: #10241a; --soon: #f2b45a; --soon-soft: #2a1f0b; --risk: #ff8a80; --risk-soft: #2c1414;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.55 var(--font); }
+a { color: var(--primary); }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+header.top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); text-decoration: none; }
+.logo { width: 28px; height: 28px; border-radius: 8px; background: var(--primary); display: grid; place-items: center; }
+.logo svg { width: 18px; height: 18px; }
+.nav-link { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 15px; }
+.nav-link:hover { color: var(--text); }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 48px; align-items: center; padding: 40px 0 64px; }
+h1 { font-size: clamp(2rem, 5vw, 3.1rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 16px; }
+.lede { font-size: 1.15rem; color: var(--text-muted); margin: 0 0 28px; max-width: 34em; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: var(--radius); font-weight: 700; text-decoration: none; transition: background .15s ease, transform .15s ease; }
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+.btn:focus-visible, a:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+.fine { font-size: 14px; color: var(--text-muted); margin-top: 12px; }
+
+/* The app preview, built from real screen text rather than a picture. */
+.preview { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 20px; }
+.preview-head { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+.row { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-top: 1px solid var(--border); }
+.row:first-of-type { border-top: 0; }
+.row-main { flex: 1; min-width: 0; }
+.row-title { font-weight: 700; }
+.row-why { font-size: 14px; color: var(--text-muted); }
+.tag { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; padding: 2px 10px; border-radius: 999px; white-space: nowrap; }
+.tag-risk { color: var(--risk); background: var(--risk-soft); }
+.tag-soon { color: var(--soon); background: var(--soon-soft); }
+.tag-ok { color: var(--ok); background: var(--ok-soft); }
+.alert { margin-top: 12px; padding: 12px 14px; border-radius: var(--radius); background: var(--risk-soft); color: var(--risk); font-size: 14px; font-weight: 600; }
+
+section.block { padding: 56px 0; border-top: 1px solid var(--border); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.01em; margin: 0 0 24px; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 22px; }
+.card h3 { margin: 0 0 6px; font-size: 1.1rem; }
+.card p { margin: 0; color: var(--text-muted); }
+.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: step; }
+.steps li { counter-increment: step; }
+.steps li::before { content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); font-weight: 700; margin-bottom: 10px; }
+.steps strong { display: block; }
+.steps span { color: var(--text-muted); }
+.price { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.amount { font-size: 2rem; font-weight: 800; margin: 4px 0 12px; }
+.amount small { font-size: 1rem; font-weight: 600; color: var(--text-muted); }
+ul.ticks { margin: 0; padding-left: 20px; color: var(--text-muted); }
+ul.ticks li { margin-top: 6px; }
+details { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-top: 10px; }
+summary { font-weight: 700; cursor: pointer; }
+details p { color: var(--text-muted); margin: 10px 0 0; }
+.cta { text-align: center; }
+.cta p { color: var(--text-muted); margin: 0 auto 24px; max-width: 32em; }
+footer { padding: 32px 0 48px; border-top: 1px solid var(--border); font-size: 14px; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+@media (max-width: 760px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-top: 16px; }
+  .grid, .steps, .price { grid-template-columns: minmax(0, 1fr); }
+  section.block { padding: 40px 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span>
+      Deadline Radar
+    </a>
+    <a class="nav-link" href="#price">Price</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">Know what to start tonight, and why.</h1>
+        <p class="lede">Deadline Radar pulls in your Canvas assignments, tells you when to start each one, and warns you when you have more work than time. It's built by a student, for college students.</p>
+        <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
+        <p class="fine">The core planner will be free.</p>
+      </div>
+
+      <div class="preview" role="img" aria-label="Example Deadline Radar screen. Three assignments with when to start each and why, and a warning that the work doesn't fit the study time.">
+        <div class="preview-head">Start today</div>
+        <div class="row">
+          <div class="row-main">
+            <div class="row-title">History essay (5 pages)</div>
+            <div class="row-why">About 5 h of writing, due Friday. Your study time before then is Tuesday and Thursday.</div>
+          </div>
+          <span class="tag tag-risk">At risk</span>
+        </div>
+        <div class="row">
+          <div class="row-main">
+            <div class="row-title">Bio Lab 3</div>
+            <div class="row-why">The due date moved from Thursday to Tuesday.</div>
+          </div>
+          <span class="tag tag-soon">Moved</span>
+        </div>
+        <div class="row">
+          <div class="row-main">
+            <div class="row-title">Chapter 4 reading</div>
+            <div class="row-why">About 1 h. Start Wednesday; there's room.</div>
+          </div>
+          <span class="tag tag-ok">On track</span>
+        </div>
+        <div class="alert">This week has 14 h of work and 9 h of study time. Here's what you could move.</div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="why-title">
+      <h2 id="why-title">A planner that tells you the truth</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Every suggestion has a reason</h3>
+          <p>"Start Tuesday: about 2 h of writing, due Thursday." No mystery scores.</p>
+        </div>
+        <div class="card">
+          <h3>Warnings when it won't fit</h3>
+          <p>When you have more work than time, it says so early and shows what you could move, shorten, or ask an extension for.</p>
+        </div>
+        <div class="card">
+          <h3>Alerts when a due date moves</h3>
+          <p>New, moved, and removed assignments are shown for you to approve. Nothing changes without you seeing it.</p>
+        </div>
+        <div class="card">
+          <h3>A study method for each type of work</h3>
+          <p>Flashcards for a quiz, an outline for an essay. Each one comes with the research behind it, and you can rate what works for you.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="how-title">
+      <h2 id="how-title">Set up once, then just check it</h2>
+      <ol class="steps">
+        <li><strong>Paste your Canvas calendar link</strong><span>It's in Canvas under Calendar, then Calendar Feed.</span></li>
+        <li><strong>Pick your study times</strong><span>For example, weeknights from 6 to 9.</span></li>
+        <li><strong>Check the plan</strong><span>Time estimates are automatic. Fix one only if it looks wrong.</span></li>
+      </ol>
+    </section>
+
+    <section class="block" id="price" aria-labelledby="price-title">
+      <h2 id="price-title">Price</h2>
+      <div class="price">
+        <div class="card">
+          <h3>Free</h3>
+          <div class="amount">$0</div>
+          <ul class="ticks">
+            <li>Canvas sync and due date alerts</li>
+            <li>When to start, with the reason</li>
+            <li>Automatic time estimates</li>
+            <li>Overload warnings</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Semester pass</h3>
+          <div class="amount">$6 <small>per semester, planned</small></div>
+          <ul class="ticks">
+            <li>Reminders and calendar export of study sessions</li>
+            <li>Sync across your devices</li>
+            <li>Estimates that learn your pace</li>
+          </ul>
+        </div>
+      </div>
+      <p class="fine">The pass isn't on sale yet. Waitlist members hear first and can say what it should include.</p>
+    </section>
+
+    <section class="block" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions</h2>
+      <details>
+        <summary>Is my Canvas link safe?</summary>
+        <p>Your calendar link works like a password, so it's treated like one. It's never shown back to you, written to logs, or shared.</p>
+      </details>
+      <details>
+        <summary>Will this raise my grades?</summary>
+        <p>We can't promise that, and we won't. It helps you start on time and shows study methods that research suggests help on average.</p>
+      </details>
+      <details>
+        <summary>Does it work with my school?</summary>
+        <p>If your Canvas has a Calendar Feed link at the bottom of the Calendar page, it should. Other platforms may come later.</p>
+      </details>
+      <details>
+        <summary>Who is it for?</summary>
+        <p>College students aged 18 and over.</p>
+      </details>
+    </section>
+
+    <section class="block cta" id="waitlist" aria-labelledby="wait-title">
+      <h2 id="wait-title">Get an early version</h2>
+      <p>Join the waitlist and you'll get one email when the beta opens. Nothing else.</p>
+      <p class="fine">Privacy: your email is only used to tell you when the beta opens. It's never sold or shared, and you can ask to be removed at any time.</p>
+      <!-- Until a waitlist form is chosen, signups arrive as emails. -->
+      <a class="btn btn-primary" href="mailto:RadarDeadline@gmail.com?subject=Deadline%20Radar%20waitlist">Join the waitlist</a>
+    </section>
+  </main>
+
+  <footer>
+    <span>Deadline Radar · Not affiliated with Instructure or Canvas.</span>
+    <span>Contact: <a href="mailto:RadarDeadline@gmail.com">RadarDeadline@gmail.com</a></span>
+  </footer>
+</div>
+</body>
+</html>
