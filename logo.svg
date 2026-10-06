@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- TermOwl: a close-up of an owl keeping watch. The feathered disc and beak say "owl", the
+       iris is a countdown ring (time left before a deadline), and the ear tuft is a pencil. -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3a58dc"/>
+      <stop offset="1" stop-color="#2a43b3"/>
+    </linearGradient>
+    <radialGradient id="iris" cx=".5" cy=".4" r=".62">
+      <stop offset="0" stop-color="#ffd27a"/>
+      <stop offset="1" stop-color="#f0a429"/>
+    </radialGradient>
+    <clipPath id="tileclip"><rect width="1024" height="1024" rx="230"/></clipPath>
+  </defs>
+  <rect width="1024" height="1024" rx="230" fill="url(#tile)"/>
+
+  <g clip-path="url(#tileclip)">
+    <!-- Pencil ear tuft (drawn first, so the face sits on top of its end) -->
+    <g transform="rotate(-38 640 300)">
+      <rect x="590" y="262" width="250" height="76" rx="12" fill="#ffffff"/>
+      
+      <path d="M840 262 L930 300 L840 338 Z" fill="#e8ecfd"/>
+      <path d="M902 288 L930 300 L902 312 Z" fill="#101a4d"/>
+    </g>
+
+    <!-- Feathered facial disc: a ring of overlapping scallops -->
+    <g fill="#5b74ea">
+      <circle cx="460" cy="590" r="300"/>
+    </g>
+    <g fill="#5b74ea"><circle cx="760.0" cy="590.0" r="32"/><circle cx="755.4" cy="642.1" r="32"/><circle cx="741.9" cy="692.6" r="32"/><circle cx="719.8" cy="740.0" r="32"/><circle cx="689.8" cy="782.8" r="32"/><circle cx="652.8" cy="819.8" r="32"/><circle cx="610.0" cy="849.8" r="32"/><circle cx="562.6" cy="871.9" r="32"/><circle cx="512.1" cy="885.4" r="32"/><circle cx="460.0" cy="890.0" r="32"/><circle cx="407.9" cy="885.4" r="32"/><circle cx="357.4" cy="871.9" r="32"/><circle cx="310.0" cy="849.8" r="32"/><circle cx="267.2" cy="819.8" r="32"/><circle cx="230.2" cy="782.8" r="32"/><circle cx="200.2" cy="740.0" r="32"/><circle cx="178.1" cy="692.6" r="32"/><circle cx="164.6" cy="642.1" r="32"/><circle cx="160.0" cy="590.0" r="32"/><circle cx="164.6" cy="537.9" r="32"/><circle cx="178.1" cy="487.4" r="32"/><circle cx="200.2" cy="440.0" r="32"/><circle cx="230.2" cy="397.2" r="32"/><circle cx="267.2" cy="360.2" r="32"/><circle cx="310.0" cy="330.2" r="32"/><circle cx="357.4" cy="308.1" r="32"/><circle cx="407.9" cy="294.6" r="32"/><circle cx="460.0" cy="290.0" r="32"/><circle cx="512.1" cy="294.6" r="32"/><circle cx="562.6" cy="308.1" r="32"/><circle cx="610.0" cy="330.2" r="32"/><circle cx="652.8" cy="360.2" r="32"/><circle cx="689.8" cy="397.2" r="32"/><circle cx="719.8" cy="440.0" r="32"/><circle cx="741.9" cy="487.4" r="32"/><circle cx="755.4" cy="537.9" r="32"/></g>
+
+    <!-- The eye -->
+    <circle cx="460" cy="590" r="222" fill="#ffffff"/>
+    <circle cx="460" cy="590" r="168" fill="url(#iris)"/>
+    <!-- Countdown ring on the iris: three quarters of the time gone, a quarter left -->
+    <circle cx="460" cy="590" r="140" fill="none" stroke="#ffffff" stroke-opacity=".35" stroke-width="20"/>
+    <circle cx="460" cy="590" r="140" fill="none" stroke="#101a4d" stroke-width="20" stroke-linecap="round"
+            stroke-dasharray="660 220" transform="rotate(-90 460 590)"/>
+    <circle cx="460" cy="590" r="84" fill="#101a4d"/>
+    <circle cx="428" cy="556" r="26" fill="#ffffff"/>
+
+    <!-- Beak, at the edge of the face -->
+    <path d="M690 650 L790 676 L716 786 Z" fill="#f0a429"/>
+  </g>
+</svg>

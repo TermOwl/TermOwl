@@ -3,11 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deadline Radar: the honest planner for college students</title>
-<meta name="description" content="Deadline Radar pulls in your Canvas assignments, tells you when to start each one and why, and warns you when you have more work than time.">
-<meta property="og:title" content="Deadline Radar: the honest planner">
+<title>TermOwl: the honest planner for college students</title>
+<meta name="description" content="TermOwl pulls in your Canvas assignments, tells you when to start each one and why, and warns you when you have more work than time.">
+<meta property="og:title" content="TermOwl: the honest planner">
 <meta property="og:description" content="When to start every assignment, and why. Warnings when your work doesn't fit. Alerts when a due date moves.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%233451d1'/%3E%3Ccircle cx='12' cy='12' r='6' fill='none' stroke='white' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='2' fill='white'/%3E%3C/svg%3E">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="logo.png">
+<meta property="og:image" content="https://deadline-radar.github.io/DeadlineRadar/logo.png">
 <style>
 /* Same tokens as the app (docs/design-system.md). No new colours below this block. */
 :root {
@@ -36,8 +38,7 @@ a { color: var(--primary); }
 .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
 header.top { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--text); text-decoration: none; }
-.logo { width: 28px; height: 28px; border-radius: 8px; background: var(--primary); display: grid; place-items: center; }
-.logo svg { width: 18px; height: 18px; }
+.logo { width: 32px; height: 32px; display: block; }
 .nav-link { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 15px; }
 .nav-link:hover { color: var(--text); }
 
@@ -101,8 +102,8 @@ footer { padding: 32px 0 48px; border-top: 1px solid var(--border); font-size: 1
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#">
-      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></span>
-      Deadline Radar
+      <img class="logo" src="logo.svg" alt="" width="32" height="32">
+      TermOwl
     </a>
     <a class="nav-link" href="#price">Price</a>
   </header>
@@ -111,12 +112,12 @@ footer { padding: 32px 0 48px; border-top: 1px solid var(--border); font-size: 1
     <section class="hero" aria-labelledby="hero-title">
       <div>
         <h1 id="hero-title">Know what to start tonight, and why.</h1>
-        <p class="lede">Deadline Radar pulls in your Canvas assignments, tells you when to start each one, and warns you when you have more work than time. It's built by a student, for college students.</p>
+        <p class="lede">TermOwl pulls in your Canvas assignments, tells you when to start each one, and warns you when you have more work than time. It's built by a student, for college students.</p>
         <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
         <p class="fine">The core planner will be free.</p>
       </div>
 
-      <div class="preview" role="img" aria-label="Example Deadline Radar screen. Three assignments with when to start each and why, and a warning that the work doesn't fit the study time.">
+      <div class="preview" role="img" aria-label="Example TermOwl screen. Three assignments with when to start each and why, and a warning that the work doesn't fit the study time.">
         <div class="preview-head">Start today</div>
         <div class="row">
           <div class="row-main">
@@ -225,13 +226,13 @@ footer { padding: 32px 0 48px; border-top: 1px solid var(--border); font-size: 1
       <p>Join the waitlist and you'll get one email when the beta opens. Nothing else.</p>
       <p class="fine">Privacy: your email is only used to tell you when the beta opens. It's never sold or shared, and you can ask to be removed at any time.</p>
       <!-- Until a waitlist form is chosen, signups arrive as emails. -->
-      <a class="btn btn-primary" href="mailto:RadarDeadline@gmail.com?subject=Deadline%20Radar%20waitlist">Join the waitlist</a>
+      <a class="btn btn-primary" href="mailto:TermOwl@outlook.com?subject=TermOwl%20waitlist">Join the waitlist</a>
     </section>
   </main>
 
   <footer>
-    <span>Deadline Radar · Not affiliated with Instructure or Canvas.</span>
-    <span>Contact: <a href="mailto:RadarDeadline@gmail.com">RadarDeadline@gmail.com</a></span>
+    <span>TermOwl · Not affiliated with Instructure or Canvas.</span>
+    <span>Contact: <a href="mailto:TermOwl@outlook.com">TermOwl@outlook.com</a></span>
   </footer>
 </div>
 </body>
