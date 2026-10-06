@@ -76,6 +76,9 @@ h2 { font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.01em; margin: 0 0 2
 .steps li::before { content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); font-weight: 700; margin-bottom: 10px; }
 .steps strong { display: block; }
 .steps span { color: var(--text-muted); }
+/* White on purpose: the form inside is light-only. */
+.waitlist-form { max-width: 520px; margin: 16px auto 0; padding: 8px 16px 0; background: #ffffff; border-radius: 16px; text-align: left; }
+.waitlist-form iframe { display: block; border: 0; width: 100%; }
 .price { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .amount { font-size: 2rem; font-weight: 800; margin: 4px 0 12px; }
 .amount small { font-size: 1rem; font-weight: 600; color: var(--text-muted); }
@@ -113,7 +116,7 @@ footer { padding: 32px 0 48px; border-top: 1px solid var(--border); font-size: 1
       <div>
         <h1 id="hero-title">Know what to start tonight, and why.</h1>
         <p class="lede">TermOwl pulls in your Canvas assignments, tells you when to start each one, and warns you when you have more work than time. It's built by a student, for college students.</p>
-        <a class="btn btn-primary" href="https://tally.so/r/WOvq0J" target="_blank" rel="noopener">Join the waitlist</a>
+        <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
         <p class="fine">The core planner will be free.</p>
       </div>
 
@@ -227,7 +230,10 @@ footer { padding: 32px 0 48px; border-top: 1px solid var(--border); font-size: 1
       <h2 id="wait-title">Get an early version</h2>
       <p>Join the waitlist and you'll get one email when the beta opens. Nothing else.</p>
       <p class="fine">Privacy: your email is only used to tell you when the beta opens. It's collected through our form provider, Tally, never sold or shared, and you can ask to be removed at any time (TermOwl@outlook.com).</p>
-      <a class="btn btn-primary" href="https://tally.so/r/WOvq0J" target="_blank" rel="noopener">Join the waitlist</a>
+      <div class="waitlist-form">
+        <iframe src="https://tally.so/embed/WOvq0J?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1" title="Join the TermOwl waitlist" loading="lazy" width="100%" height="470"></iframe>
+      </div>
+      <p class="fine">Form not showing? <a href="https://tally.so/r/WOvq0J" target="_blank" rel="noopener">Open it in a new tab</a>.</p>
     </section>
   </main>
 
