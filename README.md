@@ -1,6 +1,6 @@
 ﻿# TermOwl website
 
-The public landing page for TermOwl, served by GitHub Pages at https://TermOwl.github.io/TermOwl/ (the address keeps the old name until the GitHub organization and repository are renamed).
+The public landing page for TermOwl, served by GitHub Pages at https://termowl.github.io/TermOwl/.
 
 ## Making a change
 
