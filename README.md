@@ -1,6 +1,6 @@
 ﻿# TermOwl website
 
-The public landing page for TermOwl, served by GitHub Pages at https://deadline-radar.github.io/DeadlineRadar/ (the address keeps the old name until the GitHub organization and repository are renamed).
+The public landing page for TermOwl, served by GitHub Pages at https://Term-Owl.github.io/TermOwl/ (the address keeps the old name until the GitHub organization and repository are renamed).
 
 ## Making a change
 
